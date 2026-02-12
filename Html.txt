@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Devanshi Bhatt | Full-Stack Prompt Engineer</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #050511;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-color: #f1f5f9;
+            --accent-color: #00f7ff; /* Neon Blue Accent */
+            --accent-glow: rgba(0, 247, 255, 0.5);
+            --secondary-color: #0066ff; /* A complementary blue */
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+            background-image: radial-gradient(circle at 50% 50%, rgba(0, 102, 255, 0.1) 0%, var(--bg-color) 100%);
+        }
+
+        /* --- BACKGROUND ANIMATION --- */
+        .bg-animation {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            animation: moveOrb 20s infinite alternate ease-in-out;
+        }
+        .orb-1 { width: 350px; height: 350px; background: var(--accent-color); top: 5%; left: 15%; }
+        .orb-2 { width: 450px; height: 450px; background: var(--secondary-color); bottom: 15%; right: 15%; animation-delay: -8s; }
+
+        @keyframes moveOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(40px, 60px) scale(1.2); }
+        }
+
+        /* --- MAIN CONTAINER --- */
+        .container {
+            position: relative;
+            z-index: 10;
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+        .nav-name { font-weight: 700; font-size: 1.3rem; color: white; letter-spacing: 1px; }
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent-color); }
+        .menu-icon {
+            display: none;
+            font-size: 1.8rem;
+            cursor: pointer;
+            color: var(--accent-color);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 20px;
+                background: var(--card-bg);
+                padding: 20px;
+                border-radius: 10px;
+                border: 1px solid rgba(255,255,255,0.1);
+                backdrop-filter: blur(10px);
+            }
+            .nav-links.active { display: flex; }
+            .menu-icon { display: block; }
+        }
+
+        /* --- HEADER --- */
+        header {
+            text-align: center;
+            padding: 120px 0 80px;
+            animation: fadeIn 1s ease-out;
+        }
+        h1 {
+            font-size: 4rem;
+            margin: 0;
+            background: linear-gradient(to right, #fff, var(--accent-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 20px var(--accent-glow);
+            font-weight: 700;
+        }
+        .role {
+            font-size: 1.4rem;
+            color: var(--accent-color);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-top: 15px;
+            font-weight: 600;
+        }
+        .btn-container {
+            margin-top: 40px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        .btn {
+            padding: 14px 35px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s;
+            font-size: 1rem;
+        }
+        .btn-primary {
+            background: var(--accent-color);
+            color: #050511;
+            box-shadow: 0 0 25px var(--accent-glow);
+        }
+        .btn-secondary {
+            background: transparent;
+            border: 2px solid var(--accent-color);
+            color: var(--accent-color);
+        }
+        .btn:hover { transform: scale(1.05); box-shadow: 0 0 35px var(--accent-glow); }
+
+        /* --- SECTIONS --- */
+        .section-title {
+            font-size: 2.2rem;
+            border-left: 6px solid var(--accent-color);
+            padding-left: 20px;
+            margin: 80px 0 40px;
+            font-weight: 700;
+        }
+
+        /* --- SERVICES GRID --- */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+        }
+        .card {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s, border-color 0.3s;
+        }
+        .card:hover {
+            transform: translateY(-7px);
+            border-color: var(--accent-color);
+        }
+        .card h3 { margin-top: 0; color: var(--accent-color); font-size: 1.3rem; }
+        .card p { color: #cbd5e1; }
+
+        /* --- DETAILED SERVICES --- */
+        .detailed-services { margin-top: 60px; }
+        .service-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 40px;
+            padding: 30px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .service-info { flex: 1; }
+        .service-info h3 { color: var(--accent-color); font-size: 1.6rem; margin-bottom: 15px; }
+        .service-info p { margin-bottom: 20px; color: #cbd5e1; }
+        .service-list { list-style: none; padding: 0; }
+        .service-list li {
+            margin-bottom: 12px;
+            color: #e2e8f0;
+            display: flex;
+        }
+        .service-list li::before {
+            content: "▹";
+            color: var(--accent-color);
+            margin-right: 12px;
+            font-weight: bold;
+        }
+        .service-explanation {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            display: block;
+            margin-top: 4px;
+        }
+
+        @media (max-width: 768px) {
+            .service-row { flex-direction: column; }
+        }
+
+        /* --- PORTFOLIO (IMAGE & PROMPT) --- */
+        .project-showcase {
+            margin-bottom: 50px;
+            background: rgba(255,255,255,0.03);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+        .project-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        .project-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            margin-bottom: 25px;
+        }
+        .comp-img-container {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+        .comp-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            transition: transform 0.3s;
+        }
+        .comp-img:hover { transform: scale(1.03); }
+        .comp-label {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(0,0,0,0.7);
+            color: white;
+            padding: 5px 12px;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .prompt-box {
+            background: #111827;
+            padding: 20px;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+            font-family: 'Courier New', monospace;
+            color: #a5f3fc;
+            font-size: 0.95rem;
+            white-space: pre-wrap;
+        }
+        .prompt-label {
+             display: block;
+             font-weight: 700;
+             color: var(--accent-color);
+             margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid { grid-template-columns: 1fr; }
+        }
+
+        /* --- CONTACT FORM --- */
+        form {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        input, textarea {
+            width: 100%;
+            padding: 18px;
+            margin-bottom: 15px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
+        }
+        input:focus, textarea:focus { outline: none; border-color: var(--accent-color); }
+        button {
+            width: 100%;
+            padding: 18px;
+            background: var(--accent-color);
+            color: #050511;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover { background-color: var(--accent-glow); transform: translateY(-2px); }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="bg-animation">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+    </div>
+
+    <div class="container">
+        
+        <nav>
+            <div class="nav-name">DEVANSHI BHATT</div>
+            <div class="menu-icon" onclick="toggleMenu()">☰</div>
+            <div class="nav-links" id="navLinks">
+                <a href="#services" onclick="toggleMenu()">Services</a>
+                <a href="#work" onclick="toggleMenu()">Work</a>
+                <a href="#contact" onclick="toggleMenu()">Contact</a>
+            </div>
+        </nav>
+
+        <header>
+            <h1>Devanshi Bhatt</h1>
+            <div class="role">Full-Stack Prompt Engineer</div>
+            <p style="color: #ccc; max-width: 600px; margin: 25px auto; font-size: 1.1rem;">
+                Bridging the gap between human creativity and Artificial Intelligence. 
+                I specialize in Visual Design, Editorial Strategy, and Data Logic.
+            </p>
+            <div class="btn-container">
+                <a href="#contact" class="btn btn-primary">Hire Me</a>
+                <a href="https://www.linkedin.com/in/devanshi-bhatt-0aa066375?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" class="btn btn-secondary" target="_blank">LinkedIn</a>
+            </div>
+        </header>
+
+        <div id="services">
+            <h2 class="section-title">Core Expertise</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>01. Visual Design</h3>
+                    <p>Creating photorealistic product mockups, KDP book covers, and social media ads using Midjourney & DALL-E.</p>
+                </div>
+                <div class="card">
+                    <h3>02. Editorial Strategy</h3>
+                    <p>Ghostwriting eBooks and SEO blogs with a human-like tone, ensuring zero robotic fluff.</p>
+                </div>
+                <div class="card">
+                    <h3>03. Data Logic</h3>
+                    <p>Formatting messy unstructured text into clean JSON code for app developers and databases.</p>
+                </div>
+            </div>
+
+            <h2 class="section-title">Detailed Services Explained</h2>
+            <div class="detailed-services">
+                
+                <div class="service-row">
+                    <div class="service-info">
+                        <h3>Visual & Graphic Design</h3>
+                        <p>I use advanced AI tools to create stunning visuals that capture your brand's essence and drive engagement. Forget generic stock photos; get custom-tailored imagery.</p>
+                        <ul class="service-list">
+                            <li>
+                                <div>Ebook Cover Design (KDP)</div>
+                                <span class="service-explanation">I create eye-catching, genre-specific covers that stand out in crowded marketplaces like Amazon, increasing click-through rates.</span>
+                            </li>
+                            <li>
+                                <div>Product Packaging Mockups</div>
+                                <span class="service-explanation">Visualize your product in realistic 3D environments before production. Perfect for e-commerce listings and marketing materials.</span>
+                            </li>
+                            <li>
+                                <div>Social Media Ad Creatives</div>
+                                <span class="service-explanation">Generate high-converting visuals optimized for Facebook, Instagram, and LinkedIn ads to stop the scroll and capture attention.</span>
+                            </li>
+                             <li>
+                                <div>Brand Identity & Logos</div>
+                                <span class="service-explanation">Develop unique logos, color palettes, and visual style guides that define your brand's personality.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-row">
+                    <div class="service-info">
+                        <h3>Writing & Editorial Copy</h3>
+                        <p>From compelling sales copy to full-length ebooks, I engineer prompts to produce high-quality, human-sounding text that resonates with your audience.</p>
+                        <ul class="service-list">
+                            <li>
+                                <div>Ebook Ghostwriting</div>
+                                <span class="service-explanation">I can help outline and write entire chapters or complete books, maintaining a consistent voice and engaging narrative flow.</span>
+                            </li>
+                            <li>
+                                <div>SEO Blog Articles</div>
+                                <span class="service-explanation">Create informative, keyword-optimized blog posts that rank well on search engines while providing genuine value to readers.</span>
+                            </li>
+                            <li>
+                                <div>Conversion Copywriting</div>
+                                <span class="service-explanation">Craft persuasive copy for landing pages, emails, and sales letters designed to convert visitors into customers.</span>
+                            </li>
+                             <li>
+                                <div>Chatbot Personality Design</div>
+                                <span class="service-explanation">Define the tone, style, and behavioral rules for your AI chatbot, making customer interactions more natural and effective.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="service-row">
+                    <div class="service-info">
+                        <h3>Technical & Data Logic</h3>
+                        <p>I solve complex data challenges by creating precise prompts that structure information and automate workflows for developers and businesses.</p>
+                        <ul class="service-list">
+                            <li>
+                                <div>Unstructured Data to JSON</div>
+                                <span class="service-explanation">Convert messy text from emails, PDFs, or documents into clean, structured JSON format ready for database ingestion.</span>
+                            </li>
+                             <li>
+                                <div>API Prompt Engineering</div>
+                                <span class="service-explanation">Design robust and reliable prompts for use within software applications via APIs like OpenAI's, ensuring consistent outputs.</span>
+                            </li>
+                            <li>
+                                <div>Prompt Optimization & Auditing</div>
+                                <span class="service-explanation">Analyze and improve existing prompts to reduce costs, increase speed, and eliminate errors or "hallucinations."</span>
+                            </li>
+                            <li>
+                                <div>Workflow Automation</div>
+                                <span class="service-explanation">Connect AI prompts with other tools (like Zapier) to automate repetitive tasks, such as summarizing emails or categorizing support tickets.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <div id="work">
+            <h2 class="section-title">Selected Projects</h2>
+
+            <div class="project-showcase">
+                <div class="project-header">
+                    <div class="project-title">PROJECT: Fantasy Ebook Cover Design</div>
+                </div>
+                <div class="comparison-grid">
+                    <div class="comp-img-container">
+                        <span class="comp-label" style="background: #ef4444;">Standard Stock Photo</span>
+                         <img src="image_0.png" alt="Before: Generic Stock Photo" class="comp-img">
+                    </div>
+                    <div class="comp-img-container">
+                        <span class="comp-label" style="background: var(--accent-color); color: #050511;">My AI-Generated Cover</span>
+                         <img src="image_1.png" alt="After: AI Generated Fantasy Cover" class="comp-img">
+                    </div>
+                </div>
+                <div class="prompt-box">
+                    <span class="prompt-label">MY PROMPT:</span>
+                    "Epic fantasy book cover, a lone warrior with a glowing sword facing a dragon on a mountain peak, ancient ruins, stormy sky with lightning, cinematic lighting, highly detailed, digital art style, rule of thirds composition, typography for title 'DRAGON'S OATH' and author name at bottom."
+                </div>
+            </div>
+
+             <div class="project-showcase">
+                <div class="project-header">
+                    <div class="project-title">PROJECT: Realistic Product Packaging Mockup</div>
+                </div>
+                <div class="comparison-grid">
+                    <div class="comp-img-container">
+                        <span class="comp-label" style="background: #ef4444;">Flat 2D Design</span>
+                         <img src="image_2.png" alt="Before: Flat 2D Label Design" class="comp-img">
+                    </div>
+                    <div class="comp-img-container">
+                        <span class="comp-label" style="background: var(--accent-color); color: #050511;">My 3D AI Mockup</span>
+                         <img src="image_3.png" alt="After: Photorealistic 3D Mockup" class="comp-img">
+                    </div>
+                </div>
+                <div class="prompt-box">
+                    <span class="prompt-label">MY PROMPT:</span>
+                    "Photorealistic product mockup of a premium amber glass supplement bottle with a matte black label and gold foil text 'VITALITY BOOST', placed on a rustic wooden table with natural light from a window, blurred botanical background, 8k resolution, macro lens shot."
+                </div>
+            </div>
+
+        </div>
+
+        <div id="contact">
+            <h2 class="section-title">Get In Touch</h2>
+            <form action="https://formspree.io/f/xpqjqvvy" method="POST">
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <textarea name="message" rows="5" placeholder="How can I help you with your project?" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </div>
+
+        <footer style="text-align: center; padding: 60px 0; color: #94a3b8; font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05);">
+            &copy; 2026 Devanshi Bhatt. All Rights Reserved.
+        </footer>
+
+    </div>
+
+    <script>
+        function toggleMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+    </script>
+
+</body>
+</html>
